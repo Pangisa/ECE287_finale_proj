@@ -1,18 +1,30 @@
-TITLE: Pixel Drawer using VGA on FPGA Board DE2-115
-DISCLAIMER: Nothing in this project works as intended.
-Tools Needed: Quartus Prime Lite Edition ver 16.1 (Publisher: Intel)
-Recommended Skills: Knowledge of Verilog HDL and ModelSim (version used is 10.5b)
+# Table of Contents
 
-PROJECT HIGH LEVEL DESCRIPTION: ///////////////////////////////////////////////////
+[Link Text](PROJECT HIGH LEVEL DESCRIPTION)
+[Link Text](GENERAL NOTES)
+[Link Text](DESCRIPTION AND USE BY MODULE)
+[Link Text](FIGURE DESCRIPTIONS AND DEMO LINK)
+
+
+# TITLE: Pixel Drawer using VGA on FPGA Board DE2-115
+# DISCLAIMER: Nothing in this project works as intended.
+# Tools Needed: Quartus Prime Lite Edition ver 16.1 (Publisher: Intel)
+# Recommended Skills: Knowledge of Verilog HDL and ModelSim (version used is 10.5b)
+
+## PROJECT HIGH LEVEL DESCRIPTION: 
 
 This project intends to draw a colored pixel onto a monitor using the VGA port of a DE2-115 board.  The code is written to be hierarchical so that complexity can be layered on top of existing modules. The top level module (in MASTER_TEST.v) will parse signals to and from “child” modules but will not perform any other function. This project has two main child modules before the VGA module which are contained in files debounce_switches.v and DrawBox.v. debounce_switches makes it so that the toggle-able switches behave as perfect switches and DrawBox sends coordinates and color signals in the form of a memory address and memory data signal.  The VGA module vga_driver_memory_double_buf.v receives these inputs and when it is enabled (a signal sent by DrawBox) writes the inputs to a memory of 19200 words each of which is 24 bits long.  There are two instantiations of this memory and each frame the reading is swapped so that data can be written to the other.
- GENERAL NOTES: ///////////////////////////////////////////
+
+## GENERAL NOTES:
+ 
 All clock signal are synced to a 50 MHz clock and are referenced within the project as clk or by the pin CLOCK_50. The project in most cases is default to a reset condition. Reset is turned off when the appropriate control goes high. For most of the project that is SW[0].  This also includes module vga_driver_memory_double_buf , but since the reset is controlled by KEY[0] which is sending the 1bit signal when not pressed the module skips the reset stage.
 
 The VGA coordinate system has 0,0 in the top left. It extends to a width of 640 pixels and height of 460 pixels. See the following sections for a more detailed description.
 
 Pin assignments for the DE2-115 have been included in a .csv file in the repository. These may have to be imported into the project file.
-DESCRIPTION AND USE BY MODULE: /////////////////////////////////////////////  
+
+## DESCRIPTION AND USE BY MODULE: 
+
 The following description are ordered in loose order to how the finite state machine in MASTER_TEST travels through the project. Refer to figure 1 for a visual description.
 
 1.
@@ -56,6 +68,7 @@ Credit: Dr. Peter Jamieson. Personal website: http://drpeterjamieson.com/
 There is no way to post a link to the original module.
 
 6. 
+
 vga_frame.v
 This is the module created by the IP tool on Quartus. There is an initialization image which serves as a plain color background and is the initial read from the module. This is instantiated twice in vga_driver_memory_double_buf.
 
@@ -63,7 +76,7 @@ This is the module created by the IP tool on Quartus. There is an initialization
 
 Barring the names of variables and states in the finite state machine this module works as follows.  1. Set the initialization file image.mif so that it is displayed. Image.mif has entries as 24 bits where 8 bits are for RGB, in that order. 2.  Activate one of the instantiations of vga_frame. 3. Wait until the frame has finished, meanwhile read the data from vga_frame. 4. If the drawing signal has been sent (from outside the module) start drawing in the new data. Continue until the frame is done and then loop to 2. Which will switch to the other instantiation of vga_frame.
 
-FIGURE DESCRIPTIONS AND DEMO LINK//////////////////////////////////////////////////////
+## FIGURE DESCRIPTIONS AND DEMO LINK
 Figure 1 is a visual flow chart description of the project (the code can also be viewed by looking in MASTER_TEST)
 
 demo link: https://youtu.be/U7vFMT5p2JE?si=qiWJUj6thcOwXFSa
