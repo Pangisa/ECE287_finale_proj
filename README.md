@@ -1,15 +1,7 @@
-# Table of Contents
-
-[Link Text](PROJECT HIGH LEVEL DESCRIPTION)
-[Link Text](GENERAL NOTES)
-[Link Text](DESCRIPTION AND USE BY MODULE)
-[Link Text](FIGURE DESCRIPTIONS AND DEMO LINK)
-
-
 # TITLE: Pixel Drawer using VGA on FPGA Board DE2-115
-# DISCLAIMER: Nothing in this project works as intended.
-# Tools Needed: Quartus Prime Lite Edition ver 16.1 (Publisher: Intel)
-# Recommended Skills: Knowledge of Verilog HDL and ModelSim (version used is 10.5b)
+-DISCLAIMER: Nothing in this project works as intended.
+-Tools Needed: Quartus Prime Lite Edition ver 16.1 (Publisher: Intel)
+-Recommended Skills: Knowledge of Verilog HDL and ModelSim (version used is 10.5b)
 
 ## PROJECT HIGH LEVEL DESCRIPTION: 
 
